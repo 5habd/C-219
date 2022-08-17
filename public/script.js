@@ -22,7 +22,7 @@ peer.on("call",(call)=>{
     const video = document.createElement('video')
     call.on("stream",(userVideoStream)=>{
         addVideoStream(video,userVideoStream)
-        
+
     })
 })
     });
@@ -63,6 +63,37 @@ $(function () {
         if (e.key == "Enter" && $("#chat_message").val().length !== 0) {
             socket.emit("message", $("#chat_message").val());
             $("#chat_message").val("");
+        }
+    })
+
+    $("#mute_button").click(function(){
+        const enabled = myStream.getAudioTracks()[0].enabled
+        if(enabled) {
+            myStream.getAudioTracks()[0].enabled = false;
+            html = `<i class="fas fa-microphone-slash"></i>`
+            $("#mute-button").toggleClass("background_red")
+            $("#mute-button").html(html)
+        }
+        else {
+            myStream.getAudioTracks()[0].enabled = true;
+            html = `<i class="fas fa-microphone"></i>`
+            $("#mute-button").toggleClass("background_red")
+            $("#mute-button").html(html)
+        }
+    })
+    $("#stop_video").click(function(){
+        const enabled = myStream.getVideoTracks()[0].enabled
+        if(enabled) {
+            myStream.getVideoTracks()[0].enabled = false;
+            html = `<i class="fas fa-video-slash"></i>`
+            $("#stop_video").toggleClass("background_red")
+            $("#stop_video").html(html)
+        }
+        else {
+            myStream.getVideoTracks()[0].enabled = true;
+            html = `<i class="fas fa-video"></i>`
+            $("#stop_video").toggleClass("background_red")
+            $("#stop_video").html(html)
         }
     })
 
